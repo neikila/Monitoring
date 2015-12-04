@@ -1,0 +1,11 @@
+set title 'Graphs'
+set xlabel 'Time'
+set ylabel 'rps'
+set yrange [0:130]
+set grid
+while (1) {
+plot 'rps_back51' using 1:2 w l lw 1 title '51',\
+'rps_back131' using 1:2 w l lw 1 title '131',\
+'rps_back142' using 1:2 w l lw 1 title '142'
+}
+pause -1
