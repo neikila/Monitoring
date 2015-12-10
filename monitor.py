@@ -33,10 +33,16 @@ class Monitor(object):
 
         f = open(server.get_rps_log_filename(), 'w')
         while True:
-            response = requests.get('http://' + server.ip + ':' + str(port) + '/db/api/service/stats/')
-            response = json.load(StringIO(str(response.content)))
+	    time_cur += dt
+	    try:
+            	response = requests.get('http://' + server.ip + ':' + str(port) + '/db/api/service/stats/')
+            except:
+		f.write(str(time_cur) + ' ' + '0' + ' 0' + '\n')
+		f.flush()
+		time.sleep(1)
+		continue
+	    response = json.load(StringIO(str(response.content)))
             # print time_cur, response.get('rps') , response.get('memory_free')
-            time_cur += dt
             f.write(str(time_cur) + ' ' + str(response.get('rps')) + ' ' + str(response.get('memory_free')) + '\n')
             f.flush()
             time.sleep(1)
@@ -80,3 +86,32 @@ class Monitor(object):
 test = Monitor()
 test.monitor_cpu()
 test.monitor_rps()
+
+def get_request(response):
+        arr = response.split('\n')
+        arr = re.split(" +",arr[2])
+        return int(arr[-2])
+
+f = open("rps.txt", "w")
+t = time.time()
+response = requests.get('http://95.213.200.135:8080/')
+response = response.content
+i = 0
+rps = get_request(response)
+sum_rps = 0
+while True:
+        if (time.time()-t) >= 1.0:
+                response = requests.get('http://95.213.200.135:8080/')
+                response = response.content
+                new_rps = get_request(response)
+                sum_rps += (new_rps-rps)
+                rps = new_rps
+                t = time.time()
+                i += 1
+        else:
+                continue
+        if i % 3 == 0:
+                f.write(str(i)+' '+str(sum_rps/3) + ' 0' +'\n')
+                f.flush()
+                sum_rps = 0
+
