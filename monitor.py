@@ -37,7 +37,10 @@ class Monitor(object):
             response = json.load(StringIO(str(response.content)))
             # print time_cur, response.get('rps') , response.get('memory_free')
             time_cur += dt
-            f.write(str(time_cur) + ' ' + str(response.get('rps')) + ' ' + str(response.get('memory_free')) + '\n')
+            f.write(str(time_cur) + ' ' + str(response.get('rps')) +
+                    ' ' + str(response.get('memory_free')) +
+                    ' ' + str(response.get('cpuUs')) +
+                    '\n')
             f.flush()
             time.sleep(1)
         f.close()
@@ -78,5 +81,5 @@ class Monitor(object):
         t3.start()
 
 test = Monitor()
-test.monitor_cpu()
+# test.monitor_cpu()
 test.monitor_rps()
