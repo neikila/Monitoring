@@ -33,21 +33,16 @@ class Monitor(object):
 
         f = open(server.get_rps_log_filename(), 'w')
         while True:
-	    time_cur += dt
-	    try:
-            	response = requests.get('http://' + server.ip + ':' + str(port) + '/db/api/service/stats/')
-            except:
-		f.write(str(time_cur) + ' ' + '0' + ' 0' + '\n')
-		f.flush()
-		time.sleep(1)
-		continue
-	    response = json.load(StringIO(str(response.content)))
-            # print time_cur, response.get('rps') , response.get('memory_free')
             time_cur += dt
-            f.write(str(time_cur) + ' ' + str(response.get('rps')) +
-                    ' ' + str(response.get('memory_free')) +
-                    ' ' + str(response.get('cpuUs')) +
-                    '\n')
+            try:
+                response = requests.get('http://' + server.ip + ':' + str(port) + '/db/api/service/stats/')
+                response = json.load(StringIO(str(response.content)))
+                f.write(str(time_cur) + ' ' + str(response.get('rps')) +
+                        ' ' + str(response.get('memory_free')) +
+                        ' ' + str(response.get('cpuUs')) +
+                        '\n')
+            except:
+                f.write(str(time_cur) + ' 0 0 0\n')
             f.flush()
             time.sleep(1)
         f.close()

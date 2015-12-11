@@ -1,7 +1,7 @@
 set title 'Graphs'
 set xlabel 'Time'
 set ylabel 'rps'
-set yrange [0:400]
+set yrange [0:300]
 set grid
 while (1) {
 plot 'out/rps_back51' using 1:2 w l lw 1 title '51',\
