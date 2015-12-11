@@ -92,7 +92,7 @@ def get_request(response):
         arr = re.split(" +",arr[2])
         return int(arr[-2])
 
-f = open("rps.txt", "w")
+f_balancer = open(output_dir+"rps_balancer", "w")
 t = time.time()
 response = requests.get('http://95.213.200.135:8080/')
 response = response.content
@@ -111,7 +111,7 @@ while True:
         else:
                 continue
         if i % 3 == 0:
-                f.write(str(i)+' '+str(sum_rps/3) + ' 0' +'\n')
-                f.flush()
+                f_balancer.write(str(i)+' '+str(sum_rps/3) + ' 0' +'\n')
+                f_balancer.flush()
                 sum_rps = 0
 
