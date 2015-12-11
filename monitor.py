@@ -8,6 +8,7 @@ from subprocess import Popen, PIPE
 
 output_dir = 'out/'
 
+
 class Server(object):
 
     def __init__(self, ip, ssh_name, filename):
