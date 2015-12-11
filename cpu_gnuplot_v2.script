@@ -1,0 +1,9 @@
+set title 'CPU'
+set xlabel 'Time'
+set ylabel '%'
+set grid
+plot 'out/rps_back51' using 1:4 w l lw 1 title '51',\
+'out/rps_back131' using 1:4 w l lw 1 title '131',\
+'out/rps_back142' using 1:4 w l lw 1 title '142'
+pause 1
+reread
