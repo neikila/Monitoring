@@ -92,7 +92,7 @@ def get_request(response):
         arr = re.split(" +",arr[2])
         return int(arr[-2])
 
-f = open("rps.txt", "w")
+f = open("out/rps.txt", "w")
 t = time.time()
 response = requests.get('http://95.213.200.135:8080/')
 response = response.content
